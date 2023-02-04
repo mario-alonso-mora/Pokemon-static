@@ -1,32 +1,31 @@
 import Head from "next/head";
-import { title } from "process";
 import { FC, PropsWithChildren } from "react";
-
-    
-      export const LayOut:FC <PropsWithChildren> = ({children} ) =>  {
-      return (
-
-        <>
-        
-        <Head>
-            <title>{title || 'PokemonApp'}</title>
-            <meta name="Author" content="Mario Alonso" />
-            <meta name="description" content="informacion sobre el pokemon xxxxx" />
-            <meta name="keywords" content="xxx,pokemon,pokedex" />
-
-        </Head>
+import { NavBar } from "../ui/NavBar";
 
 
+	interface Props{
 
-            <main>
+		title:String;
+	}
 
-                {children}
-            </main>
+export const LayOut: FC<PropsWithChildren <Props>> = ({ children , title}) => {
+	return (
+		<>
+			<Head>
+				<title>{title || "PokemonApp"}</title>
+				<meta name="Author" content="Mario Alonso" />
+				<meta name="description" content={`Informacion sobre el pokemon${title}`} />
+				<meta name="keywords" content={ `${title},pokemon,pokedex`} />
+			</Head>
 
+			<NavBar/>
 
-        </>
-        
-        
-      )
-    }
-        
+			<main style={{
+				padding:'0px 0px 0px',
+				display:"flex",
+				flexDirection:'row',
+				
+			}}>{children}</main>
+		</>
+	);
+};
