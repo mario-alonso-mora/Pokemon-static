@@ -1,46 +1,47 @@
-import { SmallPokemon } from '../../interfaces/pokemon-list';
-import { FC } from 'react';
-import { Grid, Card, Row, Text } from '@nextui-org/react';
+import { SmallPokemon } from "../../interfaces/pokemon-list";
+import { FC } from "react";
+import { Grid, Card, Row, Text } from "@nextui-org/react";
+import { useRouter } from "next/router";
 
-
-
-interface Props{
-
-    pokemon:SmallPokemon
+interface Props {
+    pokemon: SmallPokemon;
 }
 
-export const PokemonCard:FC<Props> = ({pokemon}) => {
+export const PokemonCard: FC<Props> = ({ pokemon }) => {
+    const router = useRouter();
 
-    const {id,name,img} = pokemon
+    const onclick = () => {
+        router.push(`/pokemon/${pokemon.id}`);
+    };
 
-  return (
-    
-    <Grid key={id} xs={6} sm={3} md={2} xl={1}>
+    const { id, name, img } = pokemon;
 
-    <Card isHoverable isPressable>
+    return (
+        <Grid key={id} xs={6} sm={3} md={2} xl={1}>
 
-        <Card.Body css={{p:2}}>
+            <Card hoverable clickable onClick={onclick}>
 
-            <Card.Image src={img}
-            width="100%"
-            height={140}/>
+                <Card.Body css={{ p: 2 }}>
 
-        </Card.Body>
+                    <Card.Image src={img} width="100%" height={140} />
 
-    <Card.Footer>
+                </Card.Body>
 
+                <Card.Footer></Card.Footer>
 
-    </Card.Footer>
-        <Row justify="space-evenly">
-            <Text transform="capitalize">{name}</Text>
-            <Text>{id}</Text>
+                <Row justify="space-evenly">
 
-        </Row>
-    </Card>
+                    <Text transform="capitalize">{name}</Text>
+                    
 
 
-</Grid>
 
+                    <Text>{id}</Text>
 
-  )
-}
+                </Row>
+
+            </Card>
+
+        </Grid>
+    );
+};

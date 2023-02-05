@@ -1,51 +1,68 @@
-import { Spacer, Text, useTheme } from "@nextui-org/react"
+import { Link, Spacer, Text, useTheme, Container } from '@nextui-org/react';
 import Image from "next/image";
 
+import NextLink from 'next/link';
 
 
 
-   export const NavBar = () =>{
+
+export const NavBar = () => {
 
 
-        const {theme} = useTheme();
+    const { theme } = useTheme();
 
-        return(
+    return (
 
-                <div style={{
+        <Container style={{
 
-                    display:'flex',
-                    width:"100%",
-                    flexDirection:"row",
-                    alignItems:'center',
-                    justifyContent:'start',
-                    padding:'0x 20px',
-                    backgroundColor:theme?.colors.purple300.value
+            display: 'flex',
+            width: '100%',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'start',
+            padding: '0x 50px',
+           
+          
+            backgroundColor: theme?.colors.purple600.value
 
 
 
-                }}>
+        }}>
 
-                <Image src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png" alt="icono de la app"
+            <Image src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/94.png" alt="icono de la app"
                 width={70}
                 height={70}
-                />
+            />
 
+            
 
+            <NextLink href='/' passHref>
+                <Container css={{display:'flex'}} justify='center' alignItems={'center'}>
+                    <Text color="white" h2>P</Text><Text color="white" h3>okemon</Text>
                     
-                <Text color="white" h2>P</Text>
-                <Text color="white" h3>okemon</Text>
+                </Container>
+            </NextLink>
 
-                <Spacer css={{flex:1}}/>
-                
-                <Text color="white">Favoritos</Text>
+            <Spacer css={{ flex: 1 , margin:'0',padding:'0'}}  />
+
+            <NextLink href='/favorites' passHref>
+                <Container css={{display:'flex'}} justify='center' alignItems={'center'} >
+                    <Text color="white">Favoritos</Text>
+                </Container>
+            </NextLink>
+
+            <Image src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png" alt="icono de la app"
+                width={70}
+                height={70}
+            />
 
 
-                </div>
+        </Container>
 
 
 
-        )
+    )
 
 
 
-    }
+}

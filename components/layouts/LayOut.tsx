@@ -21,8 +21,7 @@ export const LayOut: FC<PropsWithChildren <Props>> = ({ children , title}) => {
 			<NavBar/>
 
 			<main style={{
-				padding:'0px',
-				
+			
 			}}>{children}</main>
 		</>
 	);
