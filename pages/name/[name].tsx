@@ -7,6 +7,7 @@ import { localFavorites } from '@/utils';
 import confetti from 'canvas-confetti';
 import { useState } from 'react';
 import { PokemonListResponse } from '../../interfaces/pokemon-list';
+import { getPokemonInfo } from '../../utils/getPokemonInfo';
 
 
 
@@ -142,8 +143,8 @@ export const getStaticPaths: GetStaticPaths = async (ctx) => {
 
     })),
 
-
-    fallback: false
+    fallback: 'blocking'
+    //fallback: false
   }
 }
 
@@ -151,19 +152,32 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const { name } = params as { name: string };
 
-  const { data } = await pokeApi.get<Pokemon>(`/pokemon/${name}`);
+  const pokemon = await getPokemonInfo(name);
+
+  if (!pokemon) {
+
+    return {
+
+      redirect: {
+
+        destination: '/',
+        permanent: false
+      }
+    }
+
+  }
 
 
 
   return {
     props: {
 
-      pokemon: data
+      pokemon,
 
-    }
+    },
+    revalidate: 86400,
 
   }
-
 
 
 

@@ -7,6 +7,7 @@ import { Pokemon } from '../../interfaces/pokemon-full';
 import { localFavorites } from '@/utils';
 import { useState } from 'react';
 import confetti from 'canvas-confetti';
+import { getPokemonInfo } from '../../utils/getPokemonInfo';
 
 
 
@@ -122,15 +123,13 @@ const PokemonPage: NextPage<Props> = ({ pokemon }) => {
 }
 
 
-// You should use getStaticPaths if you’re statically pre-rendering pages that use dynamic routes
+// Deberíamos utilizar getStaticPaths si está pre-renderizando estáticamente páginas que utilizan rutas dinámicas
 
 
 export const getStaticPaths: GetStaticPaths = async (ctx) => {
   //const { data } = await  // your fetch function here 
 
   const pokemon151 = [...Array(151)].map((value, index) => `${index + 1}`)
-
-
 
   return {
 
@@ -140,18 +139,8 @@ export const getStaticPaths: GetStaticPaths = async (ctx) => {
 
     })),
 
-    // paths: [
-    //   {
-    //     params: { id: '1' },
-    //   },
-    //   {
-    //     params: { id: '2' },
-    //   },
-    //   {
-    //     params: { id: '3' },
-    //   }
-    // ],
-    fallback: false
+    fallback: 'blocking'//incremental static regeneration
+    //fallback: false
   }
 }
 
@@ -159,16 +148,30 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const { id } = params as { id: string };
 
-  const { data } = await pokeApi.get<Pokemon>(`/pokemon/${id}`);
+  const pokemon = await getPokemonInfo(id);
+
+  if (!pokemon) {
+
+    return {
+
+      redirect: {
+
+        destination: '/',
+        permanent: false
+      }
+    }
+
+  }
 
 
 
   return {
     props: {
 
-      pokemon: data
+      pokemon,
 
-    }
+    },
+    revalidate: 86400,//revalidacion para 24 horas
 
   }
 
