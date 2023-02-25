@@ -1,14 +1,12 @@
-
 import { Grid, Card, Text, Button, Container, Image } from '@nextui-org/react';
 import { LayOut } from "@/components/layouts/LayOut"
 import { NextPage, GetStaticPaths, GetStaticProps } from 'next';
 import pokeApi from "@/api/pokeApi";
 import { Pokemon } from '../../interfaces/pokemon-full';
 import { localFavorites } from '@/utils';
-import { useState } from 'react';
 import confetti from 'canvas-confetti';
-
-
+import { useState } from 'react';
+import { PokemonListResponse } from '../../interfaces/pokemon-list';
 
 
 
@@ -17,7 +15,8 @@ interface Props {
 
 }
 
-const PokemonPage: NextPage<Props> = ({ pokemon }) => {
+
+const PokemonByNamePage : NextPage<Props> = ({ pokemon }) => {
 
   const [isInFavorite, setIsInFavorite] = useState(localFavorites.existsInFavorites(pokemon.id))
 
@@ -128,38 +127,31 @@ const PokemonPage: NextPage<Props> = ({ pokemon }) => {
 export const getStaticPaths: GetStaticPaths = async (ctx) => {
   //const { data } = await  // your fetch function here 
 
-  const pokemon151 = [...Array(151)].map((value, index) => `${index + 1}`)
+  const {data} = await  pokeApi.get<PokemonListResponse>('/pokemon?limit=151');
 
+  const pokemonsName: string[] = data.results.map(pokemon => pokemon.name)
+
+  
 
 
   return {
 
-    paths: pokemon151.map((id) => ({
+    paths: pokemonsName.map((name) => ({
 
-      params: { id }
+      params: { name }
 
     })),
 
-    // paths: [
-    //   {
-    //     params: { id: '1' },
-    //   },
-    //   {
-    //     params: { id: '2' },
-    //   },
-    //   {
-    //     params: { id: '3' },
-    //   }
-    // ],
+
     fallback: false
   }
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
 
-  const { id } = params as { id: string };
+  const { name } = params as { name: string };
 
-  const { data } = await pokeApi.get<Pokemon>(`/pokemon/${id}`);
+  const { data } = await pokeApi.get<Pokemon>(`/pokemon/${name}`);
 
 
 
@@ -178,4 +170,4 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
 }
 
-export default PokemonPage;
+export default PokemonByNamePage ;

@@ -21,9 +21,12 @@ export const NavBar = () => {
             alignItems: 'center',
             justifyContent: 'start',
             padding: '0x 50px',
+            borderRadius:'100px',
+            marginTop:'20px',
+            
            
           
-            backgroundColor: theme?.colors.purple600.value
+            backgroundColor: theme?.colors.warningDark.value
 
 
 

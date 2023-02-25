@@ -2,11 +2,12 @@
 import pokeApi from "@/api/pokeApi";
 import { PokemonCard } from "@/components/pokemon/PokemonCard";
 import { PokemonListResponse } from "@/interfaces/pokemon-list";
-import { Card, Grid, Row, Text } from "@nextui-org/react";
+import { Grid } from '@nextui-org/react';
 import { NextPage, GetStaticProps } from "next";
 import Image from "next/image";
 import { LayOut } from "../components/layouts/LayOut";
 import { SmallPokemon } from '../interfaces/pokemon-list';
+
 
 
 interface Props {
@@ -20,7 +21,14 @@ const HomePage: NextPage<Props> = ({ pokemons }) => {
 
 	return (
 
+
 		<LayOut title={'Listado de Pokemons'}>
+
+			<Image src='/img/pokemon-go-pokemon-raichu-wallpaper-preview.jpg' alt="foto" width={2300} height={500} />
+
+
+
+
 
 
 			<Grid.Container gap={2} justify='flex-start' >
